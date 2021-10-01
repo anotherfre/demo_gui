@@ -1,10 +1,10 @@
 import time
-from PIL import ImageGrab
 import cv2
 import os
 import random
 import pyautogui as pg
-
+import pyautogui
+import numpy as np
 
 os.environ.update({"__COMPAT_LAYER": "RUnAsInvoker"})
 
@@ -12,10 +12,8 @@ os.environ.update({"__COMPAT_LAYER": "RUnAsInvoker"})
 def screen_shot(left, top, right, bot):
     # 截图
     bbox = (left, top, right, bot)
-    img = ImageGrab.grab(bbox)
-    img.save("jietu.png")
-    img = cv2.imread("jietu.png", 0)
-    os.remove("jietu.png")
+    img = pyautogui.screenshot(region=bbox)
+    img = cv2.cvtColor(np.asarray(img), cv2.COLOR_BGR2GRAY)
     return img
 
 
