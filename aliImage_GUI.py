@@ -7,14 +7,16 @@ import threading
 
 
 def download_image(text, path, result_cnt):
-    url_list = text.split('//')
+    url_list = text.split('\n')
     for url in url_list:
         try:
-            url = 'http://' + url.rstrip('\n')
+            if 'http' not in url:
+                url = 'http' + url
+            url = url.rstrip('\n')
             resp = requests.get(url)
             if resp.status_code == 200:
                 image_name = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-                with open(path.get()+ '/' + image_name + '.jpg', 'wb') as f:
+                with open(path.get() + '/' + image_name + '.jpg', 'wb') as f:
                     f.write(resp.content)
                     result_cnt.insert('end', url + ": successful"'\n')
         except Exception as e:
